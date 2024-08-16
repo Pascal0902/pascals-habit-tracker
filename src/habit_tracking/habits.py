@@ -108,6 +108,19 @@ class Habit:
             current_period_start, current_period_end = self.get_next_period(current_period_end)
         return periods
 
+    def json(self):
+        """
+        Returns all values of the object in a json compatible format for easier storage
+        Returns:
+            All value of the object in a json compatible format
+        """
+        return {
+            'name': self.name,
+            'task_description': self.task_description,
+            'period': self.period,
+            'creation_time': self.creation_time.isoformat()
+        }
+
 
 class UserHabit:
     """
@@ -166,3 +179,16 @@ class UserHabit:
         all_periods_since_creation = self.habit.get_all_periods_since(self.creation_time)
         return [(period_start, period_end, self.period_completed(period_start, period_end))
                 for period_start, period_end in all_periods_since_creation]
+
+    def json(self) -> dict:
+        """
+        Returns all values of the object in a json compatible format for easier storage
+        Returns:
+            All value of the object in a json compatible format
+        """
+        return {
+            "habit": self.habit.name,
+            "userhabit_id": self.userhabit_id,
+            "completion_times": [time.isoformat() for time in self.completion_times],
+            "creation_time": self.creation_time.isoformat()
+        }
