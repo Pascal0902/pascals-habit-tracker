@@ -45,7 +45,7 @@ class User:
         else:
             raise ValueError(f"Habit {habit.name} already exists for user {self.username}")
 
-    def remove_habit(self, habit: Habit):
+    def remove_habit(self, habit: Habit) -> UserHabit:
         """
         Remove a habit from the user's list of tracked habits.
         If the habit is not being tracked, a ValueError is raised.
@@ -53,11 +53,12 @@ class User:
             habit: The Habit object to remove from the user's list of tracked habits.
 
         Returns:
-            None
+            UserHabit object that was removed from the user's list of tracked habits.
         """
         user_habit = self.get_userhabit_for_habit(habit)
         if user_habit is not None:
             self.habits.remove(user_habit)
+            return user_habit
         else:
             raise ValueError(f"Habit {habit.name} does not exist for user {self.username}")
 

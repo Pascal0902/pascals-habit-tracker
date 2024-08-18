@@ -105,6 +105,15 @@ class StorageInterface(ABC):
         pass
 
     @abstractmethod
+    def get_all_habits(self) -> list[Habit]:
+        """
+        Retrieve all habits from the data storage.
+        Returns:
+            A list of all Habit objects in the data storage.
+        """
+        pass
+
+    @abstractmethod
     def insert_user_habit(self, user_habit: UserHabit) -> bool:
         """
         Insert a new UserHabit object into the data storage.
@@ -149,6 +158,15 @@ class StorageInterface(ABC):
 
         Returns:
             The UserHabit object corresponding to the provided ID, or None if the UserHabit object does not exist.
+        """
+        pass
+
+    @abstractmethod
+    def get_all_user_habits(self) -> list[UserHabit]:
+        """
+        Retrieve all UserHabit objects from the data storage.
+        Returns:
+            A list of all UserHabit objects in the data storage.
         """
         pass
 

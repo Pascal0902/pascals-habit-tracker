@@ -167,6 +167,19 @@ class JsonStorageInterface(StorageInterface):
         return Habit(name=habit_data["name"], task_description=habit_data["task_description"],
                      period=habit_data["period"], creation_time=creation_time)
 
+    def get_all_habits(self) -> list[Habit]:
+        """
+        Retrieve all habits from the data storage.
+        Returns:
+            A list of all Habit objects in the data storage.
+        """
+        habits = []
+        for habit_data in self.data['habits'].values():
+            creation_time = datetime.fromisoformat(habit_data["creation_time"])
+            habits.append(Habit(name=habit_data["name"], task_description=habit_data["task_description"],
+                                period=habit_data["period"], creation_time=creation_time))
+        return habits
+
     def insert_user_habit(self, user_habit: UserHabit) -> bool:
         """
         Insert a new UserHabit object into the data storage.
@@ -230,3 +243,19 @@ class JsonStorageInterface(StorageInterface):
         creation_time = datetime.fromisoformat(user_habit_data["creation_time"])
         return UserHabit(userhabit_id=user_habit_data["userhabit_id"], habit=habit, completion_times=completion_times,
                          creation_time=creation_time)
+
+    def get_all_user_habits(self) -> list[UserHabit]:
+        """
+        Retrieve all UserHabit objects from the data storage.
+        Returns:
+            A list of all UserHabit objects in the data storage.
+        """
+        user_habits = []
+        for user_habit_data in self.data['user_habits'].values():
+            habit = self.get_habit(user_habit_data["habit"])
+            completion_times = [datetime.fromisoformat(completion_time)
+                                for completion_time in user_habit_data["completion_times"]]
+            creation_time = datetime.fromisoformat(user_habit_data["creation_time"])
+            user_habits.append(UserHabit(userhabit_id=user_habit_data["userhabit_id"], habit=habit,
+                                         completion_times=completion_times, creation_time=creation_time))
+        return user_habits
