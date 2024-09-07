@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from ..habit_tracking.habits import UserHabit, Habit
-from ..habit_tracking.users import User
+from habit_tracking.habits import UserHabit, Habit
+from habit_tracking.users import User
 
 
 class StorageInterface(ABC):

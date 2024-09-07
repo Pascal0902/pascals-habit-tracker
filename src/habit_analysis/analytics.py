@@ -1,5 +1,5 @@
-from ..habit_tracking.users import User
-from ..habit_tracking.habits import Habit, UserHabit
+from habit_tracking.users import User
+from habit_tracking.habits import Habit, UserHabit
 
 
 def get_all_tracked_habits_with_streak(user: User) -> list[tuple[Habit, int]]:

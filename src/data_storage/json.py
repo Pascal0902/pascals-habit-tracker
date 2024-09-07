@@ -2,9 +2,9 @@ import json
 import os
 from datetime import datetime
 
-from .interface import StorageInterface
-from ..habit_tracking.users import User
-from ..habit_tracking.habits import Habit, UserHabit
+from data_storage.interface import StorageInterface
+from habit_tracking.users import User
+from habit_tracking.habits import Habit, UserHabit
 
 
 class JsonStorageInterface(StorageInterface):
@@ -42,7 +42,9 @@ class JsonStorageInterface(StorageInterface):
         Returns:
             None
         """
-        os.makedirs(os.path.dirname(self.file_path), exist_ok=True)
+        save_dir = os.path.dirname(self.file_path)
+        if save_dir != "":
+            os.makedirs(save_dir, exist_ok=True)
         with open(self.file_path, 'w') as fp:
             json.dump(self.data, fp)
 
@@ -103,7 +105,7 @@ class JsonStorageInterface(StorageInterface):
         if username not in self.data['users']:
             return None
         user_data = self.data['users'][username]
-        initialised_user_habits = [self.get_user_habit(user_habit_id) for user_habit_id in user_data['user_habits']]
+        initialised_user_habits = [self.get_user_habit(user_habit_id) for user_habit_id in user_data['habits']]
         return User(username=user_data["username"], habits=initialised_user_habits)
 
     def insert_habit(self, habit: Habit) -> bool:

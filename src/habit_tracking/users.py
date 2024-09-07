@@ -1,4 +1,4 @@
-from .habits import UserHabit, Habit
+from habit_tracking.habits import UserHabit, Habit
 
 
 class User:
