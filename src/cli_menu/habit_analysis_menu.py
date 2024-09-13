@@ -4,6 +4,14 @@ from habit_tracking.users import User
 
 
 def habit_analysis_menu(user: User):
+    """
+    Menu for habit analysis options.
+    Args:
+        user: The currently logged in user
+
+    Returns:
+        None
+    """
     while True:
         print("--- Habit analysis ---")
         print("1: Show all habits with current streak")
@@ -34,6 +42,14 @@ def habit_analysis_menu(user: User):
 
 
 def show_all_habits_with_current_streak(user: User):
+    """
+    Show all habits with current streak for the user.
+    Args:
+        user: The user to show habits for
+
+    Returns:
+        None
+    """
     print("--- Habits with current streak ---")
     habits_with_streak = analytics.get_all_tracked_habits_with_streak(user)
     if len(habits_with_streak) == 0:
@@ -44,6 +60,14 @@ def show_all_habits_with_current_streak(user: User):
 
 
 def show_all_habits_with_current_streak_for_specific_periodicity(user: User):
+    """
+    Show all habits with current streak for a specific periodicity.
+    Args:
+        user: The user to show habits for
+
+    Returns:
+        None
+    """
     print("--- Habits with current streak for specific periodicity ---")
     period = input("Enter habit tracking period (daily, weekly, monthly, quarterly, annually): ")
     while period not in ["daily", "weekly", "monthly", "quarterly", "annually"]:
@@ -58,6 +82,14 @@ def show_all_habits_with_current_streak_for_specific_periodicity(user: User):
 
 
 def get_habit_with_all_time_longest_streak(user: User):
+    """
+    Get the habit with the all-time longest streak for the user.
+    Args:
+        user: The user to get the longest habit streak for
+
+    Returns:
+        None
+    """
     print("--- Habit with all-time longest streak ---")
     habit, longest_streak = analytics.get_all_time_longest_habit_streak(user)
     if habit is not None:
@@ -67,6 +99,14 @@ def get_habit_with_all_time_longest_streak(user: User):
 
 
 def get_habit_with_current_longest_streak(user: User):
+    """
+    Get the habit with the current longest streak for the user.
+    Args:
+        user: The user to get the longest current habit streak for
+
+    Returns:
+        None
+    """
     print("--- Habit with current longest streak ---")
     habit, longest_streak = analytics.get_current_longest_habit_streak(user)
     if habit is not None:
@@ -76,6 +116,14 @@ def get_habit_with_current_longest_streak(user: User):
 
 
 def get_current_streak_for_specific_habit(user: User):
+    """
+    Get the current streak for a specific habit.
+    Args:
+        user: The user to get the streak for
+
+    Returns:
+        None
+    """
     print("--- Longest streak for specific habit ---")
     all_habit_names = [userhabit.habit.name for userhabit in user.habits]
     habit_name = multi_page_option_selection_menu("habit", all_habit_names)
@@ -86,6 +134,14 @@ def get_current_streak_for_specific_habit(user: User):
 
 
 def get_longest_all_time_streak_for_specific_habit(user: User):
+    """
+    Get the longest all-time streak for a specific habit.
+    Args:
+        user: The user to get the streak for
+
+    Returns:
+        None
+    """
     print("--- Longest all-time streak for specific habit ---")
     all_habit_names = [userhabit.habit.name for userhabit in user.habits]
     habit_name = multi_page_option_selection_menu("habit", all_habit_names)

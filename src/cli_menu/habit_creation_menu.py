@@ -4,6 +4,14 @@ from habit_tracking.habits import Habit
 
 
 def habit_creation_menu(data_storage: StorageInterface):
+    """
+    Menu for creating, editing, and deleting habits.
+    Args:
+        data_storage: The data storage to use for the application
+
+    Returns:
+        None
+    """
     while True:
         print("--- Habit creation ---")
         print("1: Create new habit")
@@ -25,6 +33,14 @@ def habit_creation_menu(data_storage: StorageInterface):
 
 
 def create_new_habit(data_storage: StorageInterface):
+    """
+    Create a new habit.
+    Args:
+        data_storage: The data storage to use for the application
+
+    Returns:
+        None
+    """
     print("--- Create new habit ---")
     habit_name = input("Enter habit name: ")
     habit_exists = data_storage.get_habit(habit_name) is not None
@@ -43,6 +59,14 @@ def create_new_habit(data_storage: StorageInterface):
 
 
 def edit_existing_habit(data_storage: StorageInterface):
+    """
+    Edit an existing habit.
+    Args:
+        data_storage: The data storage to use for the application
+
+    Returns:
+        None
+    """
     print("--- Edit existing habit ---")
     all_habit_names = [habit.name for habit in data_storage.get_all_habits()]
     habit_to_edit = multi_page_option_selection_menu("habit", all_habit_names)
@@ -56,6 +80,14 @@ def edit_existing_habit(data_storage: StorageInterface):
 
 
 def delete_existing_habit(data_storage: StorageInterface):
+    """
+    Delete an existing habit.
+    Args:
+        data_storage: The data storage to use for the application
+
+    Returns:
+        None
+    """
     print("--- Delete existing habit ---")
     all_habit_names = [habit.name for habit in data_storage.get_all_habits()]
     habit_to_delete = multi_page_option_selection_menu("habit", all_habit_names)

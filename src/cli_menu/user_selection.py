@@ -4,6 +4,14 @@ from cli_menu.main_menu import main_menu
 
 
 def user_menu_main(data_storage: StorageInterface):
+    """
+    Main menu for user selection.
+    Args:
+        data_storage: The data storage to use for the application
+
+    Returns:
+        None
+    """
     print("--- Please select an option ---")
     print("1: Login with existing account")
     print("2: Create a new account")
@@ -22,6 +30,14 @@ def user_menu_main(data_storage: StorageInterface):
 
 
 def user_login(data_storage: StorageInterface):
+    """
+    Login with an existing user.
+    Args:
+        data_storage: The data storage to use for the application
+
+    Returns:
+        None
+    """
     print("--- Please enter your username ---")
     username = input()
     if username == "q":
@@ -34,6 +50,14 @@ def user_login(data_storage: StorageInterface):
 
 
 def create_user(data_storage: StorageInterface):
+    """
+    Create a new user.
+    Args:
+        data_storage: The data storage to use for the application
+
+    Returns:
+        None
+    """
     print("--- Please enter your username ---")
     username = input()
     if username == "q":

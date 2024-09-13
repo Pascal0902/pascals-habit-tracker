@@ -7,6 +7,15 @@ from habit_tracking.users import User
 
 
 def habit_tracking_menu(data_storage: StorageInterface, user: User):
+    """
+    Menu for tracking habits.
+    Args:
+        data_storage: The data storage to use for the application
+        user: The user to track habits for
+
+    Returns:
+        None
+    """
     while True:
         print("--- Habit tracking ---")
         print("1: Track habit completion")
@@ -28,6 +37,15 @@ def habit_tracking_menu(data_storage: StorageInterface, user: User):
 
 
 def track_habit_completion(data_storage: StorageInterface, user: User):
+    """
+    Track habit completion for a user.
+    Args:
+        data_storage: The data storage to use for the application
+        user: The user to track habits for
+
+    Returns:
+        None
+    """
     if len(user.habits) == 0:
         print("No habits to track. Please add a habit to tracking first.")
     else:
@@ -64,6 +82,15 @@ def track_habit_completion(data_storage: StorageInterface, user: User):
 
 
 def add_habit_to_tracking(data_storage: StorageInterface, user: User):
+    """
+    Add a habit to tracking for a user.
+    Args:
+        data_storage: The data storage to use for the application
+        user: The user to add a habit to tracking for
+
+    Returns:
+        None
+    """
     print("--- Add habit to tracking ---")
     all_habit_names = [habit.name for habit in data_storage.get_all_habits()]
     habit_to_add = multi_page_option_selection_menu("habit", all_habit_names)
@@ -76,6 +103,15 @@ def add_habit_to_tracking(data_storage: StorageInterface, user: User):
 
 
 def remove_habit_from_tracking(data_storage: StorageInterface, user: User):
+    """
+    Remove a habit from tracking for a user.
+    Args:
+        data_storage: The data storage to use for the application
+        user: The user to remove a habit from tracking for
+
+    Returns:
+        None
+    """
     if len(user.habits) == 0:
         print("No habits to remove from tracking.")
     else:

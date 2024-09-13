@@ -6,6 +6,15 @@ from data_storage.interface import StorageInterface
 
 
 def main_menu(data_storage: StorageInterface, user: User):
+    """
+    Main cli menu for the application.
+    Args:
+        data_storage: The data storage to use for the application
+        user: The currently logged in user
+
+    Returns:
+        None
+    """
     while True:
         print(f"--- Welcome, {user.username}! ---")
         print("1: Habit tracking (track habit completion, add habits to tracking)")
