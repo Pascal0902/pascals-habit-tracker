@@ -5,6 +5,9 @@ This project provides a simple habit tracker which can be user via a CLI.
 ## Installing python
 This project requires python 3.10 or higher. You can download python from [here](https://www.python.org/downloads/). 
 Please follow the instructions on the website to install python on your system.
+This project was developed on Windows 11, and the Readme is written for running on Windows. If you're running on a 
+Linux or MAC system, you'll need to use the `python3` command instead of `python` (assuming default python 
+configuration in both cases).
 
 ## Running the habit tracker
 To start the habit tracker, open a shell in the main directory of this project and run the following command:
@@ -113,3 +116,18 @@ selecting option 1:
 --- Habits with current streak ---
 testhabit: 1
 ```
+
+# Creating demo data
+You can create demo data using the file `create_demo_data.py`. You can edit the paramteters for data creation directly 
+in the file:
+```
+days_of_data = 30
+completion_rate = 0.75
+username = "testuser"
+storage_file = "demo_data.json"
+```
+After editing the parameters, you can run the file using the following command from the main directory of the project:
+```
+python create_demo_data.py
+```
+
