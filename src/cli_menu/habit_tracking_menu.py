@@ -54,8 +54,12 @@ def track_habit_completion(data_storage: StorageInterface, user: User):
         habit_to_track = multi_page_option_selection_menu("habit", user_habit_names)
         if habit_to_track is not None:
             habit_to_track = user.habits[user_habit_names.index(habit_to_track)]
-            print(f"Press enter to mark {habit_to_track.habit.name} as completed for today.")
-            print("Alternatively, type a date in the format YYYY-MM-DD to mark a different date as completed.")
+            print(
+                f"Press enter to mark {habit_to_track.habit.name} as completed for today."
+            )
+            print(
+                "Alternatively, type a date in the format YYYY-MM-DD to mark a different date as completed."
+            )
             user_input = input()
             match user_input:
                 case "":
@@ -67,14 +71,20 @@ def track_habit_completion(data_storage: StorageInterface, user: User):
                 case _ if re.match(r"^\d{4}-\d{2}-\d{2}$", user_input):
                     completion_time = datetime.strptime(user_input, "%Y-%m-%d")
                     if completion_time > datetime.now():
-                        print("Cannot mark a habit as completed for a future date. Please try again.")
+                        print(
+                            "Cannot mark a habit as completed for a future date. Please try again."
+                        )
                         return track_habit_completion(data_storage, user)
                     elif completion_time < habit_to_track.creation_time:
-                        print("Cannot mark a habit as completed before the habit was started. Please try again.")
+                        print(
+                            "Cannot mark a habit as completed before the habit was started. Please try again."
+                        )
                         return track_habit_completion(data_storage, user)
                     else:
                         habit_to_track.track_completion(completion_time)
-                        print(f"{habit_to_track.habit.name} marked as completed for {completion_time.date()}.")
+                        print(
+                            f"{habit_to_track.habit.name} marked as completed for {completion_time.date()}."
+                        )
                         data_storage.update_user_habit(habit_to_track)
                 case _:
                     print("Invalid input. Please try again.")

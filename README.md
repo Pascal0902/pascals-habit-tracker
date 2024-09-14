@@ -131,3 +131,12 @@ After editing the parameters, you can run the file using the following command f
 python create_demo_data.py
 ```
 
+# Running pytests
+All important functions of this project are covered by pytest tests. You can install pytest using the following command:
+```
+pip install pytest
+```
+After installing pytest, you can run the tests using the following command from the main directory of the project:
+```
+pytest .
+```

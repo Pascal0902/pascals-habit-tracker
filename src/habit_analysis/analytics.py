@@ -1,5 +1,5 @@
-from habit_tracking.users import User
 from habit_tracking.habits import Habit, UserHabit
+from habit_tracking.users import User
 
 
 def get_all_tracked_habits_with_streak(user: User) -> list[tuple[Habit, int]]:
@@ -15,7 +15,9 @@ def get_all_tracked_habits_with_streak(user: User) -> list[tuple[Habit, int]]:
     for user_habit in user.habits:
         completion_history = user_habit.get_completion_history()
         # Remove the current period if it is not yet completed
-        completion_history = completion_history if completion_history[-1][2] else completion_history[:-1]
+        completion_history = (
+            completion_history if completion_history[-1][2] else completion_history[:-1]
+        )
         current_streak = 0
         for _, _, completed in reversed(completion_history):
             if completed:
@@ -26,7 +28,9 @@ def get_all_tracked_habits_with_streak(user: User) -> list[tuple[Habit, int]]:
     return habits_with_streak
 
 
-def get_all_tracked_habits_with_streak_for_periodicity(user: User, period: str) -> list[tuple[Habit, int]]:
+def get_all_tracked_habits_with_streak_for_periodicity(
+    user: User, period: str
+) -> list[tuple[Habit, int]]:
     """
     Retrieve all habits tracked by the user with their current streaks for a specific periodicity.
     Args:
@@ -41,7 +45,11 @@ def get_all_tracked_habits_with_streak_for_periodicity(user: User, period: str) 
         if user_habit.habit.period == period:
             completion_history = user_habit.get_completion_history()
             # Remove the current period if it is not yet completed
-            completion_history = completion_history if completion_history[-1][2] else completion_history[:-1]
+            completion_history = (
+                completion_history
+                if completion_history[-1][2]
+                else completion_history[:-1]
+            )
             current_streak = 0
             for _, _, completed in reversed(completion_history):
                 if completed:
@@ -91,7 +99,9 @@ def get_current_longest_habit_streak(user: User) -> tuple[Habit, int]:
     for user_habit in user.habits:
         completion_history = user_habit.get_completion_history()
         # Remove the current period if it is not yet completed
-        completion_history = completion_history if completion_history[-1][2] else completion_history[:-1]
+        completion_history = (
+            completion_history if completion_history[-1][2] else completion_history[:-1]
+        )
         current_streak = 0
         for _, _, completed in reversed(completion_history):
             if completed:
@@ -136,7 +146,9 @@ def get_current_streak_for_habit(user_habit: UserHabit) -> int:
     """
     completion_history = user_habit.get_completion_history()
     # Remove the current period if it is not yet completed
-    completion_history = completion_history if completion_history[-1][2] else completion_history[:-1]
+    completion_history = (
+        completion_history if completion_history[-1][2] else completion_history[:-1]
+    )
     current_streak = 0
     for _, _, completed in reversed(completion_history):
         if completed:

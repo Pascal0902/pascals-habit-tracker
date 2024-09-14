@@ -3,14 +3,15 @@ import os
 from datetime import datetime
 
 from data_storage.interface import StorageInterface
-from habit_tracking.users import User
 from habit_tracking.habits import Habit, UserHabit
+from habit_tracking.users import User
 
 
 class JsonStorageInterface(StorageInterface):
     """
     A data storage interface that uses JSON files to store data.
     """
+
     def __init__(self, file_path: str):
         """
         Args:
@@ -30,11 +31,7 @@ class JsonStorageInterface(StorageInterface):
             with open(self.file_path, 'r') as fp:
                 return json.load(fp)
         else:
-            return {
-                "users": {},
-                "habits": {},
-                "user_habits": {}
-            }
+            return {"users": {}, "habits": {}, "user_habits": {}}
 
     def __save_json(self):
         """
@@ -105,7 +102,9 @@ class JsonStorageInterface(StorageInterface):
         if username not in self.data['users']:
             return None
         user_data = self.data['users'][username]
-        initialised_user_habits = [self.get_user_habit(user_habit_id) for user_habit_id in user_data['habits']]
+        initialised_user_habits = [
+            self.get_user_habit(user_habit_id) for user_habit_id in user_data['habits']
+        ]
         return User(username=user_data["username"], habits=initialised_user_habits)
 
     def insert_habit(self, habit: Habit) -> bool:
@@ -166,8 +165,12 @@ class JsonStorageInterface(StorageInterface):
             return None
         habit_data = self.data['habits'][habit_name]
         creation_time = datetime.fromisoformat(habit_data["creation_time"])
-        return Habit(name=habit_data["name"], task_description=habit_data["task_description"],
-                     period=habit_data["period"], creation_time=creation_time)
+        return Habit(
+            name=habit_data["name"],
+            task_description=habit_data["task_description"],
+            period=habit_data["period"],
+            creation_time=creation_time,
+        )
 
     def get_all_habits(self) -> list[Habit]:
         """
@@ -178,8 +181,14 @@ class JsonStorageInterface(StorageInterface):
         habits = []
         for habit_data in self.data['habits'].values():
             creation_time = datetime.fromisoformat(habit_data["creation_time"])
-            habits.append(Habit(name=habit_data["name"], task_description=habit_data["task_description"],
-                                period=habit_data["period"], creation_time=creation_time))
+            habits.append(
+                Habit(
+                    name=habit_data["name"],
+                    task_description=habit_data["task_description"],
+                    period=habit_data["period"],
+                    creation_time=creation_time,
+                )
+            )
         return habits
 
     def insert_user_habit(self, user_habit: UserHabit) -> bool:
@@ -240,11 +249,17 @@ class JsonStorageInterface(StorageInterface):
             return None
         user_habit_data = self.data['user_habits'][user_habit_id]
         habit = self.get_habit(user_habit_data["habit"])
-        completion_times = [datetime.fromisoformat(completion_time)
-                            for completion_time in user_habit_data["completion_times"]]
+        completion_times = [
+            datetime.fromisoformat(completion_time)
+            for completion_time in user_habit_data["completion_times"]
+        ]
         creation_time = datetime.fromisoformat(user_habit_data["creation_time"])
-        return UserHabit(userhabit_id=user_habit_data["userhabit_id"], habit=habit, completion_times=completion_times,
-                         creation_time=creation_time)
+        return UserHabit(
+            userhabit_id=user_habit_data["userhabit_id"],
+            habit=habit,
+            completion_times=completion_times,
+            creation_time=creation_time,
+        )
 
     def get_all_user_habits(self) -> list[UserHabit]:
         """
@@ -255,9 +270,17 @@ class JsonStorageInterface(StorageInterface):
         user_habits = []
         for user_habit_data in self.data['user_habits'].values():
             habit = self.get_habit(user_habit_data["habit"])
-            completion_times = [datetime.fromisoformat(completion_time)
-                                for completion_time in user_habit_data["completion_times"]]
+            completion_times = [
+                datetime.fromisoformat(completion_time)
+                for completion_time in user_habit_data["completion_times"]
+            ]
             creation_time = datetime.fromisoformat(user_habit_data["creation_time"])
-            user_habits.append(UserHabit(userhabit_id=user_habit_data["userhabit_id"], habit=habit,
-                                         completion_times=completion_times, creation_time=creation_time))
+            user_habits.append(
+                UserHabit(
+                    userhabit_id=user_habit_data["userhabit_id"],
+                    habit=habit,
+                    completion_times=completion_times,
+                    creation_time=creation_time,
+                )
+            )
         return user_habits

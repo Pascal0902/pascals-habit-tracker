@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 # Get the absolute path of the src directory
 src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'src'))
@@ -35,7 +35,9 @@ if __name__ == "__main__":
                 time_frame_start = max(time_frame_start, userhabit.creation_time)
                 time_frame_end = min(time_frame_end, datetime.datetime.now())
                 completion_time = time_frame_start + datetime.timedelta(
-                    seconds=random.randint(0, int((time_frame_end - time_frame_start).total_seconds()))
+                    seconds=random.randint(
+                        0, int((time_frame_end - time_frame_start).total_seconds())
+                    )
                 )
                 userhabit.track_completion(completion_time)
         storage.insert_user_habit(userhabit)

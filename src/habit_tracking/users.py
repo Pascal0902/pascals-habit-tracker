@@ -1,10 +1,11 @@
-from habit_tracking.habits import UserHabit, Habit
+from habit_tracking.habits import Habit, UserHabit
 
 
 class User:
     """
     A class to represent a user within the habit tracking app.
     """
+
     def __init__(self, username: str, habits: list[UserHabit] = None):
         """
         Args:
@@ -43,7 +44,9 @@ class User:
             self.habits.append(user_habit)
             return user_habit
         else:
-            raise ValueError(f"Habit {habit.name} already exists for user {self.username}")
+            raise ValueError(
+                f"Habit {habit.name} already exists for user {self.username}"
+            )
 
     def remove_habit(self, habit: Habit) -> UserHabit:
         """
@@ -60,7 +63,9 @@ class User:
             self.habits.remove(user_habit)
             return user_habit
         else:
-            raise ValueError(f"Habit {habit.name} does not exist for user {self.username}")
+            raise ValueError(
+                f"Habit {habit.name} does not exist for user {self.username}"
+            )
 
     def json(self):
         """
@@ -70,5 +75,5 @@ class User:
         """
         return {
             "username": self.username,
-            "habits": [user_habit.userhabit_id for user_habit in self.habits]
+            "habits": [user_habit.userhabit_id for user_habit in self.habits],
         }

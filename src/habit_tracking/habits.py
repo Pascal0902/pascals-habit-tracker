@@ -6,7 +6,14 @@ class Habit:
     """
     A class to represent a habit within the habit tracking app.
     """
-    def __init__(self, name: str, task_description: str, period: str, creation_time: datetime = None):
+
+    def __init__(
+        self,
+        name: str,
+        task_description: str,
+        period: str,
+        creation_time: datetime = None,
+    ):
         """
         Args:
             name: The name of the habit. Must be unique, since this value acts as the primary key.
@@ -16,9 +23,17 @@ class Habit:
         """
         self.name = name
         self.task_description = task_description
-        assert period in ['daily', 'weekly', 'monthly', 'quarterly', 'annually'], "Unsupported period type provided."
+        assert period in [
+            'daily',
+            'weekly',
+            'monthly',
+            'quarterly',
+            'annually',
+        ], "Unsupported period type provided."
         self.period = period
-        self.creation_time = creation_time if creation_time is not None else datetime.now()
+        self.creation_time = (
+            creation_time if creation_time is not None else datetime.now()
+        )
 
     def get_period_start_end(self, target_time: datetime) -> tuple[datetime, datetime]:
         """
@@ -53,7 +68,9 @@ class Habit:
                 start = datetime(target_time.year, 1, 1)
                 end = datetime(target_time.year + 1, 1, 1)
             case _:
-                raise ValueError("Unsupported period type registered in habit (this should never happen).")
+                raise ValueError(
+                    "Unsupported period type registered in habit (this should never happen)."
+                )
         return start, end
 
     def get_next_period(self, period_end: datetime) -> tuple[datetime, datetime]:
@@ -89,10 +106,14 @@ class Habit:
                 next_start = period_end
                 next_end = datetime(period_end.year + 1, 1, 1)
             case _:
-                raise ValueError("Unsupported period type registered in habit (this should never happen).")
+                raise ValueError(
+                    "Unsupported period type registered in habit (this should never happen)."
+                )
         return next_start, next_end
 
-    def get_all_periods_since(self, start_time: datetime) -> list[tuple[datetime, datetime]]:
+    def get_all_periods_since(
+        self, start_time: datetime
+    ) -> list[tuple[datetime, datetime]]:
         """
         Get a list of all periods that have occurred since the provided start time.
         Args:
@@ -105,7 +126,9 @@ class Habit:
         current_period_start, current_period_end = self.get_period_start_end(start_time)
         while current_period_start < datetime.now():
             periods.append((current_period_start, current_period_end))
-            current_period_start, current_period_end = self.get_next_period(current_period_end)
+            current_period_start, current_period_end = self.get_next_period(
+                current_period_end
+            )
         return periods
 
     def json(self):
@@ -118,7 +141,7 @@ class Habit:
             'name': self.name,
             'task_description': self.task_description,
             'period': self.period,
-            'creation_time': self.creation_time.isoformat()
+            'creation_time': self.creation_time.isoformat(),
         }
 
 
@@ -126,8 +149,14 @@ class UserHabit:
     """
     A class to represent a habit being tracked by a user within the habit tracking app.
     """
-    def __init__(self, habit: Habit, userhabit_id: str = None, completion_times: list[datetime] = None,
-                 creation_time: datetime = None):
+
+    def __init__(
+        self,
+        habit: Habit,
+        userhabit_id: str = None,
+        completion_times: list[datetime] = None,
+        creation_time: datetime = None,
+    ):
         """
         Args:
             habit: The Habit object to be tracked by the user.
@@ -136,9 +165,13 @@ class UserHabit:
             creation_time: The time at which the UserHabit object was created. Defaults to the current time.
         """
         self.habit = habit
-        self.userhabit_id = userhabit_id if userhabit_id is not None else uuid.uuid4().hex
+        self.userhabit_id = (
+            userhabit_id if userhabit_id is not None else uuid.uuid4().hex
+        )
         self.completion_times = completion_times if completion_times is not None else []
-        self.creation_time = creation_time if creation_time is not None else datetime.now()
+        self.creation_time = (
+            creation_time if creation_time is not None else datetime.now()
+        )
 
     def period_completed(self, period_start: datetime, period_end: datetime) -> bool:
         """
@@ -150,7 +183,12 @@ class UserHabit:
         Returns:
             True if the habit has been completed within the period, False otherwise.
         """
-        return any([period_start <= completion_time < period_end for completion_time in self.completion_times])
+        return any(
+            [
+                period_start <= completion_time < period_end
+                for completion_time in self.completion_times
+            ]
+        )
 
     def track_completion(self, completion_time: datetime = None) -> bool:
         """
@@ -161,7 +199,9 @@ class UserHabit:
         Returns:
             True if the completion was successfully tracked, False if the habit was already completed for the period.
         """
-        completion_time = completion_time if completion_time is not None else datetime.now()
+        completion_time = (
+            completion_time if completion_time is not None else datetime.now()
+        )
         period_start, period_end = self.habit.get_period_start_end(completion_time)
         if not self.period_completed(period_start, period_end):
             self.completion_times.append(completion_time)
@@ -176,9 +216,13 @@ class UserHabit:
             A list of tuples, each containing the start and end times of a period, and a boolean indicating whether the
             habit was completed in that period.
         """
-        all_periods_since_creation = self.habit.get_all_periods_since(self.creation_time)
-        return [(period_start, period_end, self.period_completed(period_start, period_end))
-                for period_start, period_end in all_periods_since_creation]
+        all_periods_since_creation = self.habit.get_all_periods_since(
+            self.creation_time
+        )
+        return [
+            (period_start, period_end, self.period_completed(period_start, period_end))
+            for period_start, period_end in all_periods_since_creation
+        ]
 
     def json(self) -> dict:
         """
@@ -190,5 +234,5 @@ class UserHabit:
             "habit": self.habit.name,
             "userhabit_id": self.userhabit_id,
             "completion_times": [time.isoformat() for time in self.completion_times],
-            "creation_time": self.creation_time.isoformat()
+            "creation_time": self.creation_time.isoformat(),
         }

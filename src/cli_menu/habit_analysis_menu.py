@@ -69,11 +69,17 @@ def show_all_habits_with_current_streak_for_specific_periodicity(user: User):
         None
     """
     print("--- Habits with current streak for specific periodicity ---")
-    period = input("Enter habit tracking period (daily, weekly, monthly, quarterly, annually): ")
+    period = input(
+        "Enter habit tracking period (daily, weekly, monthly, quarterly, annually): "
+    )
     while period not in ["daily", "weekly", "monthly", "quarterly", "annually"]:
         print(f"Invalid period {period}. Please try again.")
-        period = input("Enter habit tracking period (daily, weekly, monthly, quarterly, annually): ")
-    habits_with_streak = analytics.get_all_tracked_habits_with_streak_for_periodicity(user, period)
+        period = input(
+            "Enter habit tracking period (daily, weekly, monthly, quarterly, annually): "
+        )
+    habits_with_streak = analytics.get_all_tracked_habits_with_streak_for_periodicity(
+        user, period
+    )
     if len(habits_with_streak) == 0:
         print("No habits with this periodicity found for user.")
     else:
@@ -128,7 +134,9 @@ def get_current_streak_for_specific_habit(user: User):
     all_habit_names = [userhabit.habit.name for userhabit in user.habits]
     habit_name = multi_page_option_selection_menu("habit", all_habit_names)
     if habit_name is not None:
-        userhabit = next(userhabit for userhabit in user.habits if userhabit.habit.name == habit_name)
+        userhabit = next(
+            userhabit for userhabit in user.habits if userhabit.habit.name == habit_name
+        )
         streak = analytics.get_current_streak_for_habit(userhabit)
         print(f"{habit_name}: {streak}")
 
@@ -146,6 +154,8 @@ def get_longest_all_time_streak_for_specific_habit(user: User):
     all_habit_names = [userhabit.habit.name for userhabit in user.habits]
     habit_name = multi_page_option_selection_menu("habit", all_habit_names)
     if habit_name is not None:
-        userhabit = next(userhabit for userhabit in user.habits if userhabit.habit.name == habit_name)
+        userhabit = next(
+            userhabit for userhabit in user.habits if userhabit.habit.name == habit_name
+        )
         longest_streak = analytics.get_longest_streak_for_habit(userhabit)
         print(f"{habit_name}: {longest_streak}")

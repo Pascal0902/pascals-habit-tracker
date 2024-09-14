@@ -1,6 +1,6 @@
+from cli_menu.main_menu import main_menu
 from data_storage.interface import StorageInterface
 from habit_tracking.users import User
-from cli_menu.main_menu import main_menu
 
 
 def user_menu_main(data_storage: StorageInterface):

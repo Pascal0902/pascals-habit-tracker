@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from habit_tracking.habits import UserHabit, Habit
+from habit_tracking.habits import Habit, UserHabit
 from habit_tracking.users import User
 
 
@@ -8,6 +8,7 @@ class StorageInterface(ABC):
     """
     An interface for interacting with a data storage system.
     """
+
     @abstractmethod
     def insert_user(self, user: User) -> bool:
         """
@@ -169,4 +170,3 @@ class StorageInterface(ABC):
             A list of all UserHabit objects in the data storage.
         """
         pass
-
