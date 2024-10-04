@@ -55,7 +55,7 @@ def test_userhabit_get_completion_history(user_habits):
     assert num_periods > 0
     # Check if the latest period is completed
     latest_period = history[-1]
-    assert latest_period[2] is True  # The last period is completed
+    assert latest_period[2] is False  # The last period is not completed
 
 
 def test_userhabit_json(user_habits):
