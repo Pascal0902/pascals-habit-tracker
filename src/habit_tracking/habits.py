@@ -1,6 +1,8 @@
 import uuid
 from datetime import datetime, timedelta
 
+from constants import PERIODS
+
 
 class Habit:
     """
@@ -18,18 +20,14 @@ class Habit:
         Args:
             name: The name of the habit. Must be unique, since this value acts as the primary key.
             task_description: A description of the task to be completed as part of this habit.
-            period: The period over which the habit should be completed (daily, weekly, monthly, quarterly, annually).
+            period: The period over which the habit should be completed. Must be one of :data:`PERIODS`.
             creation_time: The time at which the habit was created. Defaults to the current time.
         """
         self.name = name
         self.task_description = task_description
-        assert period in [
-            'daily',
-            'weekly',
-            'monthly',
-            'quarterly',
-            'annually',
-        ], "Unsupported period type provided."
+        assert (
+            period in PERIODS
+        ), f"Unsupported period type provided. Allowed values: {', '.join(PERIODS)}"
         self.period = period
         self.creation_time = (
             creation_time if creation_time is not None else datetime.now()
