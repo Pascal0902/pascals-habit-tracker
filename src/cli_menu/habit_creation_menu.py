@@ -1,6 +1,7 @@
 from cli_menu.cli_utils import multi_page_option_selection_menu
 from data_storage.interface import StorageInterface
 from habit_tracking.habits import Habit
+from constants import PERIODS
 
 
 def habit_creation_menu(data_storage: StorageInterface):
@@ -50,12 +51,12 @@ def create_new_habit(data_storage: StorageInterface):
     else:
         habit_description = input("Enter habit task description: ")
         period = input(
-            "Enter habit tracking period (daily, weekly, monthly, quarterly, annually): "
+            "Enter habit tracking period (" + ", ".join(PERIODS) + "): "
         )
-        while period not in ["daily", "weekly", "monthly", "quarterly", "annually"]:
+        while period not in PERIODS:
             print(f"Invalid period {period}. Please try again.")
             period = input(
-                "Enter habit tracking period (daily, weekly, monthly, quarterly, annually): "
+                "Enter habit tracking period (" + ", ".join(PERIODS) + "): "
             )
         habit = Habit(habit_name, habit_description, period)
         data_storage.insert_habit(habit)

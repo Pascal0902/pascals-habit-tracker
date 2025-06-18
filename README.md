@@ -1,6 +1,17 @@
 # About this project
 This project provides a simple habit tracker which can be user via a CLI.
 
+## Project structure
+The source code is located in the `src/` directory and is split into several
+packages:
+
+- `habit_tracking` – domain models such as `Habit` and `User`.
+- `habit_analysis` – functions for calculating streaks.
+- `data_storage` – storage backends, currently a JSON based implementation.
+- `cli_menu` – the command line interface.
+
+Common values such as the allowed habit periods are defined in `src/constants.py`.
+
 # Installation
 ## Installing python
 This project requires python 3.10 or higher. You can download python from [here](https://www.python.org/downloads/). 

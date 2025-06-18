@@ -1,6 +1,7 @@
 from cli_menu.cli_utils import multi_page_option_selection_menu
 from habit_analysis import analytics
 from habit_tracking.users import User
+from constants import PERIODS
 
 
 def habit_analysis_menu(user: User):
@@ -70,12 +71,12 @@ def show_all_habits_with_current_streak_for_specific_periodicity(user: User):
     """
     print("--- Habits with current streak for specific periodicity ---")
     period = input(
-        "Enter habit tracking period (daily, weekly, monthly, quarterly, annually): "
+        "Enter habit tracking period (" + ", ".join(PERIODS) + "): "
     )
-    while period not in ["daily", "weekly", "monthly", "quarterly", "annually"]:
+    while period not in PERIODS:
         print(f"Invalid period {period}. Please try again.")
         period = input(
-            "Enter habit tracking period (daily, weekly, monthly, quarterly, annually): "
+            "Enter habit tracking period (" + ", ".join(PERIODS) + "): "
         )
     habits_with_streak = analytics.get_all_tracked_habits_with_streak_for_periodicity(
         user, period
