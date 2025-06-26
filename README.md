@@ -131,6 +131,17 @@ After editing the parameters, you can run the file using the following command f
 python create_demo_data.py
 ```
 
+## Project structure
+The code base is organized into the following components:
+
+- `src/` – application modules
+  - `cli_menu` implements the interactive CLI.
+  - `habit_tracking` contains the domain models.
+  - `habit_analysis` provides streak analysis helpers.
+  - `data_storage` defines persistence interfaces and a JSON backend.
+- `tests/` – pytest unit tests covering the core functionality.
+- `main.py` – entry point launching the CLI.
+
 # Running pytests
 All important functions of this project are covered by pytest tests. You can install pytest using the following command:
 ```
