@@ -49,7 +49,10 @@ class Habit:
                 start = datetime(target_time.year, target_time.month, target_time.day)
                 end = start + timedelta(days=1)
             case 'weekly':
+                # Monday is 0, Sunday is 6.
+                # start of the week (Monday)
                 start = target_time - timedelta(days=target_time.weekday())
+                start = datetime(start.year, start.month, start.day) # Zero out time component
                 end = start + timedelta(days=7)
             case 'monthly':
                 start = datetime(target_time.year, target_time.month, 1)
@@ -124,7 +127,8 @@ class Habit:
         """
         periods = []
         current_period_start, current_period_end = self.get_period_start_end(start_time)
-        while current_period_start < datetime.now():
+        now = datetime.now()
+        while current_period_end < now: # Change condition to check the end of the period
             periods.append((current_period_start, current_period_end))
             current_period_start, current_period_end = self.get_next_period(
                 current_period_end
@@ -172,6 +176,14 @@ class UserHabit:
         self.creation_time = (
             creation_time if creation_time is not None else datetime.now()
         )
+
+    def __eq__(self, other):
+        if not isinstance(other, UserHabit):
+            return NotImplemented
+        return self.userhabit_id == other.userhabit_id
+
+    def __hash__(self):
+        return hash(self.userhabit_id)
 
     def period_completed(self, period_start: datetime, period_end: datetime) -> bool:
         """

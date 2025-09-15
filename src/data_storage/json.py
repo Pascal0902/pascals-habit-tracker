@@ -29,9 +29,19 @@ class JsonStorageInterface(StorageInterface):
         """
         if os.path.exists(self.file_path):
             with open(self.file_path, 'r') as fp:
+                # Ensure the file is not empty before loading
+                if os.fstat(fp.fileno()).st_size == 0:
+                    return {"users": {}, "habits": {}, "user_habits": {}}
                 return json.load(fp)
         else:
-            return {"users": {}, "habits": {}, "user_habits": {}}
+            # Create the file with initial empty data structure if it doesn't exist
+            initial_data = {"users": {}, "habits": {}, "user_habits": {}}
+            save_dir = os.path.dirname(self.file_path)
+            if save_dir != "":
+                os.makedirs(save_dir, exist_ok=True)
+            with open(self.file_path, 'w') as fp:
+                json.dump(initial_data, fp)
+            return initial_data
 
     def __save_json(self):
         """
