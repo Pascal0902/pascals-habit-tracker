@@ -131,22 +131,18 @@ class Habit:
             )
         return periods
 
-    def to_dict(self) -> dict:
+    def json(self):
+        """
+        Returns all values of the object in a json compatible format for easier storage
+        Returns:
+            All value of the object in a json compatible format
+        """
         return {
             'name': self.name,
             'task_description': self.task_description,
             'period': self.period,
             'creation_time': self.creation_time.isoformat(),
         }
-
-    @classmethod
-    def from_dict(cls, data: dict):
-        return cls(
-            name=data["name"],
-            task_description=data["task_description"],
-            period=data["period"],
-            creation_time=datetime.fromisoformat(data["creation_time"]),
-        )
 
 
 class UserHabit:
@@ -240,33 +236,3 @@ class UserHabit:
             "completion_times": [time.isoformat() for time in self.completion_times],
             "creation_time": self.creation_time.isoformat(),
         }
-
-
-    def to_dict(self) -> dict:
-        return {
-            "habit": self.habit.name,
-            "userhabit_id": self.userhabit_id,
-            "completion_times": [time.isoformat() for time in self.completion_times],
-            "creation_time": self.creation_time.isoformat(),
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict, all_habits: list['Habit'] = None):
-        if all_habits is None:
-            all_habits = []
-        habit = next((h for h in all_habits if h.name == data["habit"]), None)
-        if habit is None:
-            # This can happen if a habit is deleted but a user still tracks it
-            # For now, we'll return None, but ideally, we'd handle this more gracefully
-            # e.g., by logging a warning or removing the dangling reference.
-            return None
-
-        return cls(
-            habit=habit,
-            userhabit_id=data["userhabit_id"],
-            completion_times=[
-                datetime.fromisoformat(t) for t in data["completion_times"]
-            ],
-            creation_time=datetime.fromisoformat(data["creation_time"]),
-        )
-

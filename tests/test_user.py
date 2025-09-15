@@ -57,7 +57,7 @@ def test_user_remove_habit(user, habits):
 
 
 def test_user_json(user):
-    user_json = user.to_dict()
+    user_json = user.json()
     assert user_json['username'] == 'testuser'
     assert len(user_json['habits']) == 5
     # Check that the userhabit IDs match

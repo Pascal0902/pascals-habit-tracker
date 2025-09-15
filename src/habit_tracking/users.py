@@ -67,18 +67,13 @@ class User:
                 f"Habit {habit.name} does not exist for user {self.username}"
             )
 
-    def to_dict(self) -> dict:
+    def json(self):
+        """
+        Returns all values of the object in a json compatible format for easier storage
+        Returns:
+            All value of the object in a json compatible format
+        """
         return {
             "username": self.username,
             "habits": [user_habit.userhabit_id for user_habit in self.habits],
         }
-
-    @classmethod
-    def from_dict(cls, data: dict, all_user_habits: list[UserHabit] = None):
-        if all_user_habits is None:
-            all_user_habits = []
-        user_habits = [
-            uh for uh in all_user_habits if uh.userhabit_id in data["habits"]
-        ]
-        return cls(username=data["username"], habits=user_habits)
-
