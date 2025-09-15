@@ -25,7 +25,7 @@ def test_habit_get_period_start_end():
 
 def test_habit_json(habits):
     habit = habits['Budget Review']
-    habit_json = habit.json()
+    habit_json = habit.to_dict()
     assert habit_json['name'] == 'Budget Review'
     assert (
         habit_json['task_description']

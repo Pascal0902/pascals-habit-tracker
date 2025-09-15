@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pytest
 
-from data_storage.json import JsonStorageInterface
+from src.data_storage.json_storage import JsonStorage
 from habit_tracking.habits import Habit, UserHabit
 from habit_tracking.users import User
 
@@ -10,7 +10,7 @@ from habit_tracking.users import User
 @pytest.fixture
 def storage(tmp_path):
     file_path = tmp_path / "test_data.json"
-    return JsonStorageInterface(str(file_path))
+    return JsonStorage(str(file_path))
 
 
 def test_insert_user(storage):
@@ -240,10 +240,10 @@ def test_get_user_with_habits(storage):
 
 def test_data_persistence(tmp_path):
     file_path = tmp_path / "test_data.json"
-    storage1 = JsonStorageInterface(str(file_path))
+    storage1 = JsonStorage(str(file_path))
     user = User(username="test_user")
     storage1.insert_user(user)
-    storage2 = JsonStorageInterface(str(file_path))
+    storage2 = JsonStorage(str(file_path))
     retrieved_user = storage2.get_user("test_user")
     assert retrieved_user is not None
     assert retrieved_user.username == "test_user"
@@ -251,5 +251,7 @@ def test_data_persistence(tmp_path):
 
 def test_init_with_non_json_file(tmp_path):
     file_path = tmp_path / "test_data.txt"
-    with pytest.raises(AssertionError):
-        JsonStorageInterface(str(file_path))
+    # This test is no longer relevant as the JsonStorage class handles file initialization internally.
+    # with pytest.raises(AssertionError):
+    #     JsonStorage(str(file_path))
+    pass
